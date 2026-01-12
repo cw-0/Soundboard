@@ -1,6 +1,9 @@
 #include <cstring>
 #include <iostream>
+
+#include "globals.h"
 #include "ini.h"
+#include "sound.h"
 
 #include "utils.h"
 
@@ -61,8 +64,7 @@ namespace validate {
                 } else {
                     if (verifyMP3(std::filesystem::directory_entry(value))) {
                         std::cout << "\033[32mFound|\033[0m " << key << ": " << value << '\n';
-                        std::string pass_val = value;
-                        cleanInsertToSoundDict(pass_val);
+                        soundVector.emplace_back(std::make_unique<Sound>(value));
                     } else {
                         std::cout << "\033[31mNot .mp3|\033[0m " << key << ": " << value << '\n';
                     }
@@ -78,8 +80,7 @@ namespace validate {
         for (const auto& file: std::filesystem::directory_iterator(relativeSoundsPath)) {
             if (verifyMP3(file)) {
                 std::cout << "\033[32mFound|\033[0m " << file.path().filename() << '\n';
-                std::string passFile = file.path().string();
-                cleanInsertToSoundDict(passFile);
+                soundVector.emplace_back(std::make_unique<Sound>(file.path().string()));
             } else {
                 std::cout << "\033[31mNot .mp3|\033[0m " << file.path().filename() << '\n';
             }

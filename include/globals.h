@@ -1,6 +1,7 @@
 #pragma once
 
-#include <map>
-#include <string>
+#include <memory>
+#include <vector>
 
-inline std::map<std::string, std::string> soundDict{};
+class Sound;
+extern std::vector<std::unique_ptr<Sound>> soundVector;

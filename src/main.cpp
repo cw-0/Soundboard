@@ -7,6 +7,7 @@
 #include "utils.h"
 #include "validateFiles.h"
 #include "globals.h"
+#include "sound.h"
 
 int main() {
     validate::createConfigIni();
@@ -16,10 +17,11 @@ int main() {
     std::cout << "\n\n";
 
     int count{1};
-    for (const auto& pair : soundDict) {
-        std::cout << count << ". " << pair.first << ": " << pair.second << '\n';
+    for (const auto& pair : soundVector) {
+        std::cout << count << ". " << pair->soundName << ": " << pair->filePath << '\n';
         ++count;
     }
+
 
 
     return 0;

@@ -3,13 +3,11 @@
 #include <vector>
 
 
-void cleanInsertToSoundDict(const std::string& path);
-
 namespace soundboardUtils {
 
 
+    std::string stripSoundName(const std::string& path);
     void printLoadedSounds(std::vector<std::string>& soundList);
-
 
 }
 

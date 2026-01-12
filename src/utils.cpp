@@ -5,17 +5,19 @@
 
 #include "globals.h"
 
-void cleanInsertToSoundDict(const std::string& path) {
+
+namespace soundboardUtils {
+
+
+    std::string stripSoundName(const std::string& path) {
         // std::cout << "PATH: " << path << '\n';
         const size_t lastSlashPos = path.rfind('\\');
         const size_t lastDotPos = path.rfind('.');
         std::string soundName = path.substr(lastSlashPos + 1, (lastDotPos - lastSlashPos - 1));
         std::ranges::transform(soundName, soundName.begin(),
                                [](unsigned char c){ return std::tolower(c); });
-        soundDict.insert({soundName, path});
+        return soundName;
     }
-
-namespace soundboardUtils {
 
 
     void printLoadedSounds(std::vector<std::string>& soundList) {

@@ -6,4 +6,4 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Soundboard src/main.cpp src/validateFiles.cpp src/utils.cpp)
+add_executable(Soundboard src/main.cpp src/validateFiles.cpp src/utils.cpp src/sound.cpp src/globals.cpp)
