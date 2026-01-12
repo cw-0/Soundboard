@@ -1,0 +1,4 @@
+assets/sounds/*
+assets/config.ini
+cmake-build-debug/
+.idea/
