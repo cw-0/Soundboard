@@ -1,19 +1,25 @@
+#include <algorithm>
 #include <iostream>
 #include <filesystem>
 #include <fstream>
+#include <map>
 
 #include "utils.h"
 #include "validateFiles.h"
+#include "globals.h"
 
 int main() {
     validate::createConfigIni();
-    std::vector<std::string> soundList {validate::getAbsoluteSounds()};
-    std::vector<std::string> relativeSounds = validate::getRelativeSounds();
-    for (const auto& sound : relativeSounds) {
-        soundList.push_back(sound);
-    }
+    validate::getAbsoluteSounds();
+    validate::getRelativeSounds();
 
-    soundboardUtils::printLoadedSounds(soundList);
+    std::cout << "\n\n";
+
+    int count{1};
+    for (const auto& pair : soundDict) {
+        std::cout << count << ". " << pair.first << ": " << pair.second << '\n';
+        ++count;
+    }
 
 
     return 0;

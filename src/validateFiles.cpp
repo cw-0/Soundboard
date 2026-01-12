@@ -2,6 +2,8 @@
 #include <iostream>
 #include "ini.h"
 
+#include "utils.h"
+
 namespace validate {
 
     const mINI::INIFile soundIniFile("../assets/config.ini");
@@ -38,9 +40,8 @@ namespace validate {
 
 
 
-    std::vector<std::string> getAbsoluteSounds() {
-        std::cout << "\nAbsolute Path Imports\n-----------------------------\n\n";
-        std::vector<std::string> soundList;
+    void getAbsoluteSounds() {
+        // std::cout << "\nAbsolute Path Imports\n-----------------------------\n\n";
         size_t soundCount {soundIniStruct["sounds"].size()};
         // std::cout <<  soundCount << " sounds found.\n";
 
@@ -60,30 +61,29 @@ namespace validate {
                 } else {
                     if (verifyMP3(std::filesystem::directory_entry(value))) {
                         std::cout << "\033[32mFound|\033[0m " << key << ": " << value << '\n';
-                        soundList.push_back(value);
+                        std::string pass_val = value;
+                        cleanInsertToSoundDict(pass_val);
                     } else {
                         std::cout << "\033[31mNot .mp3|\033[0m " << key << ": " << value << '\n';
                     }
                 }
             }
         }
-        return soundList;
     }
 
 
-    std::vector<std::string> getRelativeSounds() {
+        void getRelativeSounds() {
         std::cout << "\nRelative Path Imports\n-----------------------------\n\n";
-        std::vector<std::string> relativeSounds;
         std::filesystem::path relativeSoundsPath {"../assets/sounds"};
         for (const auto& file: std::filesystem::directory_iterator(relativeSoundsPath)) {
             if (verifyMP3(file)) {
                 std::cout << "\033[32mFound|\033[0m " << file.path().filename() << '\n';
-                relativeSounds.push_back(file.path().string());
+                std::string passFile = file.path().string();
+                cleanInsertToSoundDict(passFile);
             } else {
                 std::cout << "\033[31mNot .mp3|\033[0m " << file.path().filename() << '\n';
             }
         }
-        return relativeSounds;
     }
 
 

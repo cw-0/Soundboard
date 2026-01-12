@@ -2,6 +2,9 @@
 #include <string>
 #include <vector>
 
+
+void cleanInsertToSoundDict(const std::string& path);
+
 namespace soundboardUtils {
 
 
