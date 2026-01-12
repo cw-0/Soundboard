@@ -3,26 +3,30 @@
 #include <filesystem>
 #include <fstream>
 #include <map>
+#include <windows.h>
 
+#include "audio.h"
 #include "utils.h"
 #include "validateFiles.h"
 #include "globals.h"
 #include "sound.h"
+#include "GUI.h"
 
-int main() {
+int WinMain(
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPSTR lpCmdLine,
+    int nShowCmd
+    ){
     validate::createConfigIni();
     validate::getAbsoluteSounds();
     validate::getRelativeSounds();
 
-    std::cout << "\n\n";
+    SBaudio::Audio_Init();
 
-    int count{1};
-    for (const auto& pair : soundVector) {
-        std::cout << count << ". " << pair->soundName << ": " << pair->filePath << '\n';
-        ++count;
-    }
+    GUI::Run();
 
-
+    SBaudio::Audio_Shutdown();
 
     return 0;
 }

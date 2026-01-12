@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "globals.h"
+#include "sound.h"
 
 
 namespace soundboardUtils {

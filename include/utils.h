@@ -12,3 +12,11 @@ namespace soundboardUtils {
 }
 
 
+namespace soundboard {
+
+
+    void playSound(size_t i);
+
+
+}
+

@@ -66,7 +66,7 @@ namespace validate {
                         std::cout << "\033[32mFound|\033[0m " << key << ": " << value << '\n';
                         soundVector.emplace_back(std::make_unique<Sound>(value));
                     } else {
-                        std::cout << "\033[31mNot .mp3|\033[0m " << key << ": " << value << '\n';
+                        std::cout << "\033[31mFile Not .mp3|\033[0m " << key << ": " << value << '\n';
                     }
                 }
             }
@@ -82,7 +82,7 @@ namespace validate {
                 std::cout << "\033[32mFound|\033[0m " << file.path().filename() << '\n';
                 soundVector.emplace_back(std::make_unique<Sound>(file.path().string()));
             } else {
-                std::cout << "\033[31mNot .mp3|\033[0m " << file.path().filename() << '\n';
+                std::cout << "\033[31mFile Not .mp3|\033[0m " << file.path().filename() << '\n';
             }
         }
     }
