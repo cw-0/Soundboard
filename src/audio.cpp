@@ -43,7 +43,7 @@ namespace SBaudio {
                     return;
                 }
                 ma_engine_play_sound(&gEngine, path, nullptr);
-                std::this_thread::sleep_for(std::chrono::seconds((int)soundLength + 1));
+                std::this_thread::sleep_for(std::chrono::seconds((int)soundLength + 3));
             }
         }
         ma_engine_play_sound(&gEngine, path, nullptr);
