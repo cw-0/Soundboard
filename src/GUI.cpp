@@ -5,6 +5,8 @@
 #include <d3d11.h>
 #include <dxgi.h>
 #include <dwmapi.h>
+#include <iostream>
+#include <thread>
 
 #include "audio.h"
 #include "globals.h"
@@ -294,7 +296,7 @@ namespace GUI
 
             ImGui::PushStyleColor(ImGuiCol_Text, cTextHi);
             ImGui::SetWindowFontScale(1.35f);
-            ImGui::TextUnformatted("Soundboard");
+            ImGui::Text("Header Here");
             ImGui::SetWindowFontScale(1.0f);
             ImGui::PopStyleColor();
 
@@ -302,10 +304,12 @@ namespace GUI
             ImGui::SetCursorPosX(ImGui::GetWindowWidth() * 0.58f);
 
             ImGui::PushStyleColor(ImGuiCol_Text, cTextDim);
-            ImGui::TextUnformatted("Loaded 12 sounds  •  1 missing  •  ");
+            size_t loadedSoundsCount = soundVector.size();
+            const char* songCountString = ("Loaded Songs: " + std::to_string(loadedSoundsCount)).c_str();
+            ImGui::Text(songCountString);
             ImGui::SameLine();
             ImGui::PushStyleColor(ImGuiCol_Text, cTextHi);
-            ImGui::TextUnformatted("Hotkeys ON");
+            ImGui::Text(soundGlobals::hotkeysOn ? "ON" : "OFF");
             ImGui::PopStyleColor(2);
 
             ImGui::EndChild();
@@ -444,8 +448,8 @@ namespace GUI
                     ImGui::PushID((int)i);
                     if (ImGui::Button(soundVector[i]->soundName.c_str(), ImVec2(cardW, cardH)))
                     {
-                        SBaudio::Audio_Play(soundVector[i]->filePath.c_str());
-
+                        std::thread playOnThread(SBaudio::Audio_Play, soundVector[i]->filePath.c_str());
+                        playOnThread.detach();
                     }
                     ImGui::PopID();
 
@@ -487,10 +491,14 @@ namespace GUI
             ImGui::SliderFloat("##vol", &vol, 0.0f, 1.0f, "");
 
             ImGui::Spacing();
-            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(120, 150, 80, 180));
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(140, 175, 95, 220));
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(120, 150, 80, 210));
-            ImGui::Button("Play", ImVec2(-1, 36));
+            ImGui::PushStyleColor(ImGuiCol_Button, IM_COL32(158, 19, 9, 180));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, IM_COL32(168, 25, 15, 220));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, IM_COL32(204, 69, 59, 210));
+            if (ImGui::Button("Stop Sound", ImVec2(-1, 36))) {
+                SBaudio::Audio_Shutdown();
+                SBaudio::Audio_Init();
+                std::cout << "Audio Force Stopped\n";
+            };
             ImGui::PopStyleColor(3);
 
             ImGui::SameLine();
@@ -501,8 +509,13 @@ namespace GUI
             static int mode = 0;
             ImGui::TextColored(ImGui::ColorConvertU32ToFloat4(cTextDim), "Mode:");
             ImGui::SameLine();
-            ImGui::RadioButton("One-shot", &mode, 0); ImGui::SameLine();
-            ImGui::RadioButton("Loop", &mode, 1);
+            if (ImGui::RadioButton("One-shot", &mode, 0)) {
+                soundGlobals::shouldLoop = false;
+            };
+            ImGui::SameLine();
+            if (ImGui::RadioButton("Loop", &mode, 1)) {
+                soundGlobals::shouldLoop = true;
+            };
 
             ImGui::Spacing();
             ImGui::TextColored(ImGui::ColorConvertU32ToFloat4(cTextDim), "Log:");
