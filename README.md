@@ -129,14 +129,13 @@ If you find bugs, open an Issue with:
 
 ## 🛣️ TODO
 - [ ] Per-sound volume control
-- [ ] Loop mode support
+- [x] Loop mode support
+- [x] Allow reloading/refreshing sounds
 - [ ] Profile save/load
 - [ ] Global hotkey support
-- [ ] Audio device selection
-- [ ] Waveform visualization
-- [ ] Sound preloading toggle
 - [ ] Drag-and-drop import
 - [ ] WAV/OGG/FLAC support
+- [ ] Add Game Preset Sounds/Profiles (.ini -> [sounds]->Category = Path)
 
 ---
 

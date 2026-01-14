@@ -13,6 +13,7 @@
 #include "imgui.h"
 #include "sound.h"
 #include "utils.h"
+#include "validateFiles.h"
 #include "backends/imgui_impl_win32.h"
 #include "backends/imgui_impl_dx11.h"
 
@@ -332,7 +333,14 @@ namespace GUI
             ImGui::Combo("##profile", &profileIdx, profiles, IM_ARRAYSIZE(profiles));
 
             ImGui::SameLine();
-            ImGui::Button("Reload", ImVec2(86, 0));
+            if (ImGui::Button("Reload", ImVec2(86, 0))) {
+                SBaudio::Audio_Shutdown();
+                soundVector.clear();
+                validate::createConfigIni();
+                validate::getAbsoluteSounds();
+                validate::getRelativeSounds();
+                SBaudio::Audio_Init();
+            }
             ImGui::SameLine();
             ImGui::Button("Save", ImVec2(70, 0));
             ImGui::SameLine();
