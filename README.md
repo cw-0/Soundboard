@@ -135,7 +135,7 @@ If you find bugs, open an Issue with:
 - [ ] Global hotkey support
 - [ ] Drag-and-drop import
 - [ ] WAV/OGG/FLAC support
-- [ ] Add Game Preset Sounds/Profiles (.ini -> [sounds]->Category = Path)
+- [ ] Add Game Preset Sounds/Profiles (Select Different Folders to Play From)
 
 ---
 
